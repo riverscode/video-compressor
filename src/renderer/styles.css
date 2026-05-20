@@ -460,14 +460,22 @@ h1 {
   font-size: 10.5px;
 }
 
+.status-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
 .message {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
   gap: 8px;
   align-items: center;
-  min-height: 34px;
-  border-top: 1px solid var(--line);
-  padding-top: 10px;
+  flex: 1;
+  min-width: 0;
   color: #8b929f;
   font-size: 11.5px;
   font-weight: 500;
@@ -515,7 +523,9 @@ h1 {
 
 .button-row {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  flex-shrink: 0;
   gap: 8px;
 }
 

@@ -22,8 +22,8 @@ const videoExtensions = new Set(['.mp4', '.mov', '.mkv', '.avi', '.webm', '.wmv'
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 780,
-    height: 610,
+    width: 790,
+    height: 630,
     resizable: false,
     title: 'Video Toolkit',
     frame: false,

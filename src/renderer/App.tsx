@@ -78,6 +78,7 @@ function App() {
       setProgress({ percent: 100, message: 'Proceso completado.' });
       setProcessState('success');
       setMessage('Archivo generado correctamente.');
+      setSelectedVideo(null);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Ocurrió un error inesperado.';
       if (errorMessage.includes('cancelado')) {
@@ -350,19 +351,6 @@ function App() {
           </div>
         </div>
 
-        <div className={`message ${processState}`}>
-          <strong>
-            {processState === 'success'
-              ? 'Éxito'
-              : processState === 'error'
-                ? 'Error'
-                : processState === 'cancelled'
-                  ? 'Detenido'
-                  : 'Estado'}
-          </strong>
-          <span>{message}</span>
-        </div>
-
         {outputPath ? (
           <div className="output-box">
             <span>Archivo generado</span>
@@ -370,15 +358,29 @@ function App() {
           </div>
         ) : null}
 
-        <div className="button-row">
-          {processState === 'running' ? (
-            <button className="stop-button" type="button" onClick={stopProcessing} disabled={isStopping}>
-              {isStopping ? 'Deteniendo...' : 'Detener proceso'}
+        <div className="status-action-row">
+          <div className={`message ${processState}`}>
+            <strong>
+              {processState === 'success'
+                ? 'Éxito'
+                : processState === 'error'
+                  ? 'Error'
+                  : processState === 'cancelled'
+                    ? 'Detenido'
+                    : 'Estado'}
+            </strong>
+            <span>{message}</span>
+          </div>
+          <div className="button-row">
+            {processState === 'running' ? (
+              <button className="stop-button" type="button" onClick={stopProcessing} disabled={isStopping}>
+                {isStopping ? 'Deteniendo...' : 'Detener proceso'}
+              </button>
+            ) : null}
+            <button className="run-button" type="button" onClick={startProcessing} disabled={!canStart}>
+              {processState === 'running' ? 'Procesando...' : 'Iniciar ›'}
             </button>
-          ) : null}
-          <button className="run-button" type="button" onClick={startProcessing} disabled={!canStart}>
-            {processState === 'running' ? 'Procesando...' : 'Iniciar ›'}
-          </button>
+          </div>
         </div>
       </section>
     </main>
