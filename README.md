@@ -1,130 +1,97 @@
 # Video Toolkit
 
-Aplicación de escritorio para Windows hecha con Electron, React, TypeScript y Vite. Procesa videos usando FFmpeg desde el proceso principal de Electron.
+![Platform](https://img.shields.io/badge/platform-Windows-lightgray.svg)
+![Electron](https://img.shields.io/badge/Electron-33-47848F.svg?logo=electron)
+![React](https://img.shields.io/badge/React-18-61DAFB.svg?logo=react)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCB1cArVscPlRRBS7Sa-3Gqw?label=River%20Code&style=social)](https://youtube.com/riverscode?sub_confirmation=1)
+![GitHub followers](https://img.shields.io/github/stars/riverscode?style=social)
+
+Aplicación de escritorio para procesar videos localmente usando **FFmpeg**. Sin subir archivos a la nube, sin límites de tamaño.
+
+---
+
+## Características
+
+| Acción | Descripción | Salida |
+|---|---|---|
+| **Comprimir MP4** | Reduce el peso manteniendo calidad | `_compressed.mp4` |
+| **Convertir a MP3** | Extrae el audio del video | `_audio.mp3` |
+| **Convertir a WebM** | Formato optimizado para web | `_webm.webm` |
+| **Reducir a 720p** | Escala el video a 720p máximo | `_720p.mp4` |
+| **Reducir a 1080p** | Escala el video a 1080p máximo | `_1080p.mp4` |
+
+- Arrastra y suelta archivos directamente sobre la app
+- Compatible con MP4, MOV, MKV, WebM y AVI
+- Abre el archivo generado automáticamente al terminar
+- FFmpeg incluido — no requiere instalación manual
+
+---
 
 ## Requisitos
 
-- Windows.
-- Node.js 20 o superior.
-- npm.
+- [Node.js](https://nodejs.org/) 18 o superior
+- Windows 10 / 11
+
+---
 
 ## Instalación
 
 ```bash
+# 1. Clona el repositorio
+git clone https://github.com/riverscode/video-toolkit.git
+cd video-toolkit
+
+# 2. Instala las dependencias
+#    (esto también copia ffmpeg automáticamente)
 npm install
 ```
 
-Durante la instalación se ejecuta `scripts/setup-ffmpeg.cjs`, que copia el binario de `ffmpeg-static` a:
+---
 
-```text
-resources/ffmpeg/ffmpeg.exe
-```
-
-Si prefieres usar tu propio FFmpeg, coloca manualmente `ffmpeg.exe` en esa misma ruta.
-
-## Desarrollo
+## Uso en desarrollo
 
 ```bash
 npm run dev
 ```
 
-Esto levanta Vite y abre la aplicación Electron con `nodeIntegration` desactivado y `contextIsolation` activado.
+Abre la ventana de la aplicación en modo desarrollo con hot-reload.
 
-## Compilar
+---
 
-```bash
-npm run build
-```
-
-El build verifica primero que exista `resources/ffmpeg/ffmpeg.exe`.
-
-## Generar instalador .exe
+## Compilar instalador
 
 ```bash
 npm run dist
 ```
 
-El instalador se genera en la carpeta:
+Genera un instalador `.exe` en la carpeta `dist/` listo para distribuir.
 
-```text
-dist/
+### Scripts disponibles
+
+| Comando | Descripción |
+|---|---|
+| `npm run dev` | Inicia la app en modo desarrollo |
+| `npm run build` | Compila renderer y proceso principal |
+| `npm run dist` | Genera el instalador de Windows (NSIS) |
+
+---
+
+## Estructura del proyecto
+
 ```
-
-El nombre del instalador sigue el formato:
-
-```text
-Video Toolkit-Setup-1.0.0.exe
-```
-
-## Funciones
-
-- Seleccionar un video manualmente.
-- Arrastrar y soltar un archivo de video.
-- Comprimir un `.mp4` desde el menú contextual de Windows con `Comprimir con Video Toolkit`.
-- Comprimir video MP4.
-- Convertir video a MP3.
-- Convertir video a WebM.
-- Reducir video a 720p.
-- Reducir video a 1080p.
-- Mostrar nombre del archivo, acción seleccionada, progreso, errores y ruta final.
-- Mostrar tiempo restante aproximado durante el proceso.
-- Detener el proceso activo en cualquier momento.
-
-## Seguridad
-
-- El renderer no ejecuta FFmpeg.
-- El procesamiento ocurre en el proceso principal con `child_process.spawn`.
-- La detención del proceso también ocurre desde el proceso principal, enviando `q` a FFmpeg y matando el proceso si no responde.
-- La comunicación usa `contextBridge` e `ipcRenderer`.
-- `nodeIntegration` está desactivado.
-- `contextIsolation` está activado.
-- Las rutas con espacios se manejan pasando argumentos como arreglo a `spawn`, sin usar shell.
-
-## Salidas generadas
-
-Los archivos se guardan en la misma carpeta del archivo original:
-
-- `_compressed.mp4`
-- `_audio.mp3`
-- `_webm.webm`
-- `_720p.mp4`
-- `_1080p.mp4`
-
-## Menú contextual de Windows
-
-El instalador registra esta acción para archivos `.mp4`:
-
-```text
-Comprimir con Video Toolkit
-```
-
-Al usarla, Windows abre la app con:
-
-```text
-Video Toolkit.exe --compress "ruta\del\archivo.mp4"
-```
-
-La app selecciona automáticamente `Comprimir MP4` y genera el archivo con sufijo `_compressed.mp4` en la misma carpeta del video original.
-El parser de arranque también reconoce rutas con espacios, rutas `file:///`, `--compress="ruta.mp4"` y argumentos enviados por Explorer sin el flag explícito.
-
-En Windows 11, esta opción puede aparecer dentro de `Mostrar más opciones` porque es un verbo clásico del Explorador.
-
-## Estructura
-
-```text
 src/
-  main/
-    main.ts
-  preload/
-    preload.ts
-  renderer/
-    App.tsx
-    main.tsx
-    styles.css
+├── main/         # Proceso principal de Electron
+├── preload/      # Bridge seguro entre main y renderer
+├── renderer/     # Interfaz React
+└── shared/       # Tipos y definiciones compartidas
 resources/
-  ffmpeg/
-    ffmpeg.exe
-scripts/
-  setup-ffmpeg.cjs
-  verify-ffmpeg.cjs
+└── ffmpeg/       # Binario de FFmpeg (se copia al instalar)
 ```
+
+---
+
+## Licencia
+
+MIT © [River Code](https://youtube.com/riverscode)
