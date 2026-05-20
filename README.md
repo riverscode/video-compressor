@@ -60,6 +60,36 @@ Abre la ventana de la aplicación en modo desarrollo con hot-reload.
 
 ---
 
+## Íconos de la aplicación
+
+El proyecto incluye un script que genera automáticamente todos los íconos necesarios a partir de una sola imagen PNG.
+
+**1. Coloca tu imagen fuente aquí** (mínimo 256×256 px, fondo transparente recomendado):
+
+```
+build/icon-source.png
+```
+
+**2. Ejecuta el generador:**
+
+```bash
+npm run icons
+```
+
+Esto produce en `build/`:
+
+| Archivo | Uso |
+|---|---|
+| `icon.ico` | Ícono de la app y accesos directos |
+| `icon-16.png` / `icon-32.png` | Menú contextual de Windows |
+| `icon-256.png` | Referencia de alta resolución |
+| `installerHeader.bmp` | Cabecera del instalador NSIS |
+| `installerSidebar.bmp` | Panel lateral del instalador |
+
+> El siguiente `npm run dist` los usará automáticamente.
+
+---
+
 ## Compilar instalador
 
 ```bash
@@ -74,6 +104,7 @@ Genera un instalador `.exe` en la carpeta `dist/` listo para distribuir.
 |---|---|
 | `npm run dev` | Inicia la app en modo desarrollo |
 | `npm run build` | Compila renderer y proceso principal |
+| `npm run icons` | Genera íconos desde `build/icon-source.png` |
 | `npm run dist` | Genera el instalador de Windows (NSIS) |
 
 ---
