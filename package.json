@@ -14,7 +14,8 @@
     "build:renderer": "vite build",
     "build:electron": "tsc -p tsconfig.main.json",
     "dist": "npm run build && electron-builder --win nsis",
-    "verify:ffmpeg": "node scripts/verify-ffmpeg.cjs"
+    "verify:ffmpeg": "node scripts/verify-ffmpeg.cjs",
+    "icons": "node scripts/generate-icons.cjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
@@ -32,7 +33,9 @@
     "electron": "^33.2.1",
     "electron-builder": "^25.1.8",
     "typescript": "^5.7.2",
-    "wait-on": "^8.0.1"
+    "wait-on": "^8.0.1",
+    "sharp": "^0.33.5",
+    "to-ico": "^1.1.5"
   },
   "build": {
     "appId": "com.videotoolkit.app",
@@ -55,6 +58,7 @@
       }
     ],
     "win": {
+      "icon": "build/icon.ico",
       "signAndEditExecutable": false,
       "target": [
         {
@@ -71,7 +75,9 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "include": "build/installer.nsh"
+      "include": "build/installer.nsh",
+      "installerHeader": "build/installerHeader.bmp",
+      "installerSidebar": "build/installerSidebar.bmp"
     }
   }
 }
