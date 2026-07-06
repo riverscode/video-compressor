@@ -60,6 +60,10 @@
     "win": {
       "icon": "build/icon.ico",
       "signAndEditExecutable": false,
+      "signingHashAlgorithms": [
+        "sha256"
+      ],
+      "publisherName": "Video Toolkit",
       "target": [
         {
           "target": "nsis",
@@ -77,7 +81,10 @@
       "createStartMenuShortcut": true,
       "include": "build/installer.nsh",
       "installerHeader": "build/installerHeader.bmp",
-      "installerSidebar": "build/installerSidebar.bmp"
+      "installerSidebar": "build/installerSidebar.bmp",
+      "signingHashAlgorithms": [
+        "sha256"
+      ]
     }
   }
 }

@@ -98,6 +98,20 @@ npm run dist
 
 Genera un instalador `.exe` en la carpeta `dist/` listo para distribuir.
 
+### Firmar el instalador en Windows
+
+Si quieres evitar la advertencia de Windows al instalarlo por primera vez, el instalador debe ir firmado con un certificado de firma de código válido. Un certificado autofirmado no suele bastar para evitar esa alerta de SmartScreen.
+
+Con un certificado `.pfx` ya adquirido, puedes firmarlo así:
+
+```powershell
+$env:CSC_LINK="C:\certificados\video-toolkit.pfx"
+$env:CSC_KEY_PASSWORD="tu-contraseña"
+npm run dist
+```
+
+Electron Builder usará esas variables para firmar el `.exe` y el instalador.
+
 ### Scripts disponibles
 
 | Comando | Descripción |
